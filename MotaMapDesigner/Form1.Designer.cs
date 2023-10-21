@@ -392,6 +392,7 @@
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(listBox1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             Name = "Form1";
             StartPosition = FormStartPosition.CenterScreen;
