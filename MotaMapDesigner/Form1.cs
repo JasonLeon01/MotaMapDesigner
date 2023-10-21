@@ -40,10 +40,10 @@ namespace MotaMapDesigner
         private void loadMapData()
         {
             int idx = 0;
-            while (File.Exists(@"data\map\map_" + idx.ToString() + ".dat"))
+            while (File.Exists(Application.StartupPath + @"data\map\map_" + idx.ToString() + ".dat"))
             {
                 file = "map_" + idx.ToString() + ".dat";
-                string datatext = System.IO.File.ReadAllText(@"data\map\map_" + idx.ToString() + ".dat", Encoding.GetEncoding("GB2312"));
+                string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"data\map\map_" + idx.ToString() + ".dat", Encoding.GetEncoding("GB2312"));
                 string[] datas = datatext.Split(',');
                 mapName = datas[0];
                 bgm = datas[1];
@@ -100,7 +100,7 @@ namespace MotaMapDesigner
             if (redraw)
             {
                 if (label6.Text != "" && label6.Text != "нч")
-                    pictureBox1.Image = Image.FromFile(@"graphics\character\" + label6.Text);
+                    pictureBox1.Image = Image.FromFile(Application.StartupPath + @"graphics\character\" + label6.Text);
                 else
                     g1.Clear(pictureBox1.BackColor);
                 redraw = false;
@@ -233,9 +233,9 @@ namespace MotaMapDesigner
         private void button1_Click(object sender, EventArgs e)
         {
             Dictionary<string, (string, int, int)> corres = new Dictionary<string, (string, int, int)>();
-            if (File.Exists(@"DesignerReferrence.txt"))
+            if (File.Exists(Application.StartupPath + @"DesignerReferrence.txt"))
             {
-                string extradatatext = System.IO.File.ReadAllText(@"DesignerReferrence.txt", Encoding.GetEncoding("GB2312"));
+                string extradatatext = System.IO.File.ReadAllText(Application.StartupPath + @"DesignerReferrence.txt", Encoding.GetEncoding("GB2312"));
                 string[] extradata = extradatatext.Split(Environment.NewLine.ToCharArray());
                 extradata = extradata.Where(s => !string.IsNullOrEmpty(s)).ToArray();
                 foreach (string str in extradata)
@@ -247,9 +247,9 @@ namespace MotaMapDesigner
             }
             if (textBox2.Text.Split('/')[0] == "monster")
             {
-                if (File.Exists(@"data\enemy\enemy_" + textBox2.Text.Split('/')[1] + ".dat"))
+                if (File.Exists(Application.StartupPath + @"data\enemy\enemy_" + textBox2.Text.Split('/')[1] + ".dat"))
                 {
-                    string datatext = System.IO.File.ReadAllText(@"data\enemy\enemy_" + textBox2.Text.Split('/')[1] + ".dat", Encoding.GetEncoding("GB2312"));
+                    string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"data\enemy\enemy_" + textBox2.Text.Split('/')[1] + ".dat", Encoding.GetEncoding("GB2312"));
                     string[] data = datatext.Split(Environment.NewLine.ToCharArray());
                     data = data.Where(s => !string.IsNullOrEmpty(s)).ToArray();
                     label6.Text = data[2].Split(':')[1];
@@ -268,9 +268,9 @@ namespace MotaMapDesigner
             }
             else if (textBox2.Text.Split('/')[0] == "item")
             {
-                if (File.Exists(@"data\item\item_" + textBox2.Text.Split('/')[1] + ".dat"))
+                if (File.Exists(Application.StartupPath + @"data\item\item_" + textBox2.Text.Split('/')[1] + ".dat"))
                 {
-                    string datatext = System.IO.File.ReadAllText(@"data\item\item_" + textBox2.Text.Split('/')[1] + ".dat", Encoding.GetEncoding("GB2312"));
+                    string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"data\item\item_" + textBox2.Text.Split('/')[1] + ".dat", Encoding.GetEncoding("GB2312"));
                     string[] data = datatext.Split(Environment.NewLine.ToCharArray());
                     data = data.Where(s => !string.IsNullOrEmpty(s)).ToArray();
                     label6.Text = data[3].Split(':')[1];
