@@ -1,0 +1,7 @@
+[npc]
+ID:-1,-2
+name:勇士,老人
+message:你干嘛,哈哈哎哟你好烦
+transName:none
+fade:1
+directFunc:0

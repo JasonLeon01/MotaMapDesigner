@@ -1,0 +1,5 @@
+C:\Users\Administrator\Desktop\MotaMapDesigner.exe
+C:\Users\Administrator\Desktop\MotaMapDesigner.dll
+C:\Users\Administrator\Desktop\MotaMapDesigner.deps.json
+C:\Users\Administrator\Desktop\MotaMapDesigner.runtimeconfig.json
+C:\Users\Administrator\Desktop\MotaMapDesigner.pdb
