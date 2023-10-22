@@ -349,6 +349,8 @@ namespace MotaMapDesigner
                 checkBox2.Checked = Convert.ToBoolean(temp.through);
                 pos1 = temp.pos1;
                 pos2 = temp.pos2;
+                copyEvID = events[nowMapID].IndexOf(temp);
+                label8.Text = copyEvID.ToString();
                 redraw = true;
             }
         }
