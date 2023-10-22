@@ -1,0 +1,16 @@
+E:\Github Projects\MotaMapDesigner\MapDesigner\bin\Debug\net6.0-windows\MapDesigner.exe
+E:\Github Projects\MotaMapDesigner\MapDesigner\bin\Debug\net6.0-windows\MapDesigner.deps.json
+E:\Github Projects\MotaMapDesigner\MapDesigner\bin\Debug\net6.0-windows\MapDesigner.runtimeconfig.json
+E:\Github Projects\MotaMapDesigner\MapDesigner\bin\Debug\net6.0-windows\MapDesigner.dll
+E:\Github Projects\MotaMapDesigner\MapDesigner\bin\Debug\net6.0-windows\MapDesigner.pdb
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.Form1.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.csproj.GenerateResource.cache
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.GeneratedMSBuildEditorConfig.editorconfig
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.AssemblyInfoInputs.cache
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.AssemblyInfo.cs
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.csproj.CoreCompileInputs.cache
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.dll
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\refint\MapDesigner.dll
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.pdb
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.genruntimeconfig.cache
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\ref\MapDesigner.dll
