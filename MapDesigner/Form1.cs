@@ -9,7 +9,8 @@ namespace MapDesigner
     public partial class Form1 : Form
     {
         int screenX, screenY, copyEvID, nowMapID, gameTime, pos1, pos2;
-        string file, mapName, bgm;
+        string file;
+        List<string> mapName, bgm;
         bool redraw;
         List<List<ProjectEvent>> events;
         Pen mypen;
@@ -25,8 +26,8 @@ namespace MapDesigner
             pos1 = 0;
             pos2 = 0;
             file = "";
-            mapName = "";
-            bgm = "";
+            mapName = new List<string>();
+            bgm = new List<string>();
             redraw = false;
             events = new List<List<ProjectEvent>>();
             InitializeComponent();
@@ -45,14 +46,14 @@ namespace MapDesigner
                 file = "map_" + idx.ToString() + ".dat";
                 string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"data\map\map_" + idx.ToString() + ".dat", Encoding.GetEncoding("GB2312"));
                 string[] datas = datatext.Split(',');
-                mapName = datas[0];
-                bgm = datas[1];
+                mapName.Add(datas[0]);
+                bgm.Add(datas[1]);
                 int cnt = int.Parse(datas[2]);
                 List<ProjectEvent> temp = new List<ProjectEvent>();
                 for (int i = 0; i < cnt; ++i)
                     temp.Add(new ProjectEvent(datas[3 + 11 * i], datas[4 + 11 * i], int.Parse(datas[5 + 11 * i]), int.Parse(datas[6 + 11 * i]), int.Parse(datas[7 + 11 * i]), int.Parse(datas[8 + 11 * i]), int.Parse(datas[9 + 11 * i]), int.Parse(datas[10 + 11 * i]), int.Parse(datas[11 + 11 * i]), int.Parse(datas[12 + 11 * i]), int.Parse(datas[13 + 11 * i])));
                 events.Add(temp);
-                listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "£º" + mapName);
+                listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "£º" + mapName[nowMapID]);
                 ++idx;
             }
             nowMapID = events.Count - 1;
@@ -163,8 +164,8 @@ namespace MapDesigner
             loadMapData();
             this.label2.Text = file;
             this.label2.Refresh();
-            this.textBox1.Text = mapName;
-            this.textBox6.Text = bgm;
+            this.textBox1.Text = mapName[nowMapID];
+            this.textBox6.Text = bgm[nowMapID];
             drawMapEvents();
         }
         private void timer1_Tick(object sender, EventArgs e)
@@ -174,11 +175,11 @@ namespace MapDesigner
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            mapName = textBox1.Text;
+            mapName[nowMapID] = textBox1.Text;
         }
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
-            bgm = textBox6.Text;
+            bgm[nowMapID] = textBox6.Text;
         }
         private void pictureBox1_Click(object sender, EventArgs e)
         {
@@ -422,10 +423,10 @@ namespace MapDesigner
                     listBox1.SelectedIndex = nowMapID;
                 }
                 file = "map_" + nowMapID.ToString() + ".dat";
-                mapName = listBox1.Items[nowMapID].ToString().Split("£º")[1];
                 label2.Text = file;
                 label2.Refresh();
-                textBox1.Text = mapName;
+                textBox1.Text = mapName[nowMapID];
+                textBox6.Text = bgm[nowMapID];
                 copyEvID = -1;
                 label8.Text = "ÎÞ";
                 label8.Refresh();
