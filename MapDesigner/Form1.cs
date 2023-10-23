@@ -53,7 +53,7 @@ namespace MapDesigner
                 for (int i = 0; i < cnt; ++i)
                     temp.Add(new ProjectEvent(datas[3 + 11 * i], datas[4 + 11 * i], int.Parse(datas[5 + 11 * i]), int.Parse(datas[6 + 11 * i]), int.Parse(datas[7 + 11 * i]), int.Parse(datas[8 + 11 * i]), int.Parse(datas[9 + 11 * i]), int.Parse(datas[10 + 11 * i]), int.Parse(datas[11 + 11 * i]), int.Parse(datas[12 + 11 * i]), int.Parse(datas[13 + 11 * i])));
                 events.Add(temp);
-                listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "£º" + mapName[nowMapID]);
+                listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "£º" + mapName[idx]);
                 ++idx;
             }
             nowMapID = events.Count - 1;
@@ -143,6 +143,17 @@ namespace MapDesigner
             g4.Dispose();
             buffer2.Dispose();
             g3.Dispose();
+        }
+        private void refreshList()
+        {
+            listBox1.Items.Clear();
+            int idx = 0;
+            foreach(string str in mapName)
+            {
+                listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "£º" + mapName[idx]);
+                idx++;
+            }
+            listBox1.SelectedIndex = nowMapID;
         }
         private bool haveAnEvent(int x, int y)
         {
@@ -411,6 +422,7 @@ namespace MapDesigner
         private void button7_Click(object sender, EventArgs e)
         {
             saveMapData();
+            refreshList();
         }
         private void listBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
