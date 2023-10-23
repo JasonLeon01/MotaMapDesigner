@@ -211,13 +211,12 @@ namespace MapDesigner
                 //设置打开标题、后缀
                 ofg.Title = "请选择导入png文件";
                 ofg.Filter = "png文件|*.png";
-                ofg.Multiselect = true;
                 string path = "";
                 DialogResult s = ofg.ShowDialog();
                 if (s == DialogResult.OK)
                 {
                     //得到打开的文件路径（包括文件名）
-                    string[] names = ofg.FileNames[0].ToString().Split('\\');
+                    string[] names = ofg.FileName.ToString().Split('\\');
                     label6.Text = names[names.Length - 1];
                     label6.Refresh();
                     redraw = true;
