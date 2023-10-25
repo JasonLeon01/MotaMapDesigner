@@ -252,7 +252,7 @@
             // checkBox3
             // 
             checkBox3.AutoSize = true;
-            checkBox3.Location = new Point(384, 480);
+            checkBox3.Location = new Point(399, 480);
             checkBox3.Name = "checkBox3";
             checkBox3.Size = new Size(75, 21);
             checkBox3.TabIndex = 20;
@@ -360,8 +360,7 @@
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(96F, 96F);
-            AutoScaleMode = AutoScaleMode.Dpi;
+            AutoScaleMode = AutoScaleMode.None;
             ClientSize = new Size(800, 541);
             Controls.Add(textBox6);
             Controls.Add(label11);

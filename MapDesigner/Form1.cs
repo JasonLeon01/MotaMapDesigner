@@ -148,7 +148,7 @@ namespace MapDesigner
         {
             listBox1.Items.Clear();
             int idx = 0;
-            foreach(string str in mapName)
+            foreach (string str in mapName)
             {
                 listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "£º" + mapName[idx]);
                 idx++;
