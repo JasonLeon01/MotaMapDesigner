@@ -41,10 +41,10 @@ namespace MapDesigner
         private void loadMapData()
         {
             int idx = 0;
-            while (File.Exists(Application.StartupPath + @"data\map\map_" + idx.ToString() + ".dat"))
+            while (File.Exists(Application.StartupPath + @"..\data\map\map_" + idx.ToString() + ".dat"))
             {
                 file = "map_" + idx.ToString() + ".dat";
-                string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"data\map\map_" + idx.ToString() + ".dat", Encoding.GetEncoding("GB2312"));
+                string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"..\data\map\map_" + idx.ToString() + ".dat", Encoding.GetEncoding("GB2312"));
                 string[] datas = datatext.Split(',');
                 mapName.Add(datas[0]);
                 bgm.Add(datas[1]);
@@ -67,10 +67,10 @@ namespace MapDesigner
         void saveMapData()
         {
             OpenFileDialog ofg = new OpenFileDialog();
-            if (!Directory.Exists(Application.StartupPath + @"data\map"))
+            if (!Directory.Exists(Application.StartupPath + @"..\data\map"))
             {
                 //创建路径
-                Directory.CreateDirectory(Application.StartupPath + @"data\map");
+                Directory.CreateDirectory(Application.StartupPath + @"..\data\map");
             }
             List<string> savestr = new List<string>();
             savestr.Add(textBox1.Text);
@@ -91,7 +91,7 @@ namespace MapDesigner
                 savestr.Add(ev.through.ToString());
             }
             MessageBox.Show(string.Join(",", savestr));
-            System.IO.File.WriteAllText(Application.StartupPath + @"data\map\" + label2.Text, string.Join(",", savestr), Encoding.GetEncoding("GB2312"));
+            System.IO.File.WriteAllText(Application.StartupPath + @"..\data\map\" + label2.Text, string.Join(",", savestr), Encoding.GetEncoding("GB2312"));
         }
         private void drawMapEvents()
         {
@@ -101,7 +101,7 @@ namespace MapDesigner
             if (redraw)
             {
                 if (label6.Text != "" && label6.Text != "无")
-                    pictureBox1.Image = Image.FromFile(Application.StartupPath + @"graphics\character\" + label6.Text);
+                    pictureBox1.Image = Image.FromFile(Application.StartupPath + @"..\graphics\character\" + label6.Text);
                 else
                     g1.Clear(pictureBox1.BackColor);
                 redraw = false;
@@ -110,7 +110,7 @@ namespace MapDesigner
             g1.Dispose();
             if (label6.Text != "" && label6.Text != "无")
             {
-                Image img = Image.FromFile(Application.StartupPath + @"graphics\character\" + label6.Text);
+                Image img = Image.FromFile(Application.StartupPath + @"..\graphics\character\" + label6.Text);
                 Bitmap buffer1 = new Bitmap(32, 32);
                 Graphics g2 = Graphics.FromImage(buffer1);
                 g2.DrawImage(img, new Rectangle(0, 0, 32, 32), new Rectangle(32 * ((pos1 + gameTime * Convert.ToInt32(checkBox1.Checked)) % 4), pos2 * 32, 32, 32), GraphicsUnit.Pixel);
@@ -124,12 +124,12 @@ namespace MapDesigner
             g3.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             g3.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             int cnt = 0;
-            Image floorimg = Image.FromFile(Application.StartupPath + @"graphics\system\floor.png");
+            Image floorimg = Image.FromFile(Application.StartupPath + @"..\graphics\system\floor.png");
             g3.DrawImage(floorimg, 0, 0, 352, 352);
             floorimg.Dispose();
             foreach (ProjectEvent ev in events[nowMapID])
             {
-                Image evimg = Image.FromFile(Application.StartupPath + @"graphics\character\" + ev.file);
+                Image evimg = Image.FromFile(Application.StartupPath + @"..\graphics\character\" + ev.file);
                 g3.DrawImage(evimg, new Rectangle(ev.x * 32, ev.y * 32, 32, 32), new Rectangle(32 * ((ev.pos1 + gameTime * ev.move) % 4), 32 * ev.pos2, 32, 32), GraphicsUnit.Pixel);
                 evimg.Dispose();
                 if (!checkBox3.Checked)
@@ -207,7 +207,7 @@ namespace MapDesigner
                 //创建对象
                 OpenFileDialog ofg = new OpenFileDialog();
                 //设置默认打开路径
-                ofg.InitialDirectory = Application.StartupPath + @"graphics\character";
+                ofg.InitialDirectory = Application.StartupPath + @".\graphics\character";
                 //设置打开标题、后缀
                 ofg.Title = "请选择导入png文件";
                 ofg.Filter = "png文件|*.png";
@@ -244,9 +244,9 @@ namespace MapDesigner
         private void button1_Click(object sender, EventArgs e)
         {
             Dictionary<string, (string, int, int)> corres = new Dictionary<string, (string, int, int)>();
-            if (File.Exists(Application.StartupPath + @"DesignerReferrence.txt"))
+            if (File.Exists(Application.StartupPath + @"..\DesignerReferrence.txt"))
             {
-                string extradatatext = System.IO.File.ReadAllText(Application.StartupPath + @"DesignerReferrence.txt", Encoding.GetEncoding("GB2312"));
+                string extradatatext = System.IO.File.ReadAllText(Application.StartupPath + @"..\DesignerReferrence.txt", Encoding.GetEncoding("GB2312"));
                 string[] extradata = extradatatext.Split(Environment.NewLine.ToCharArray());
                 extradata = extradata.Where(s => !string.IsNullOrEmpty(s)).ToArray();
                 foreach (string str in extradata)
@@ -258,9 +258,9 @@ namespace MapDesigner
             }
             if (textBox2.Text.Split('/')[0] == "monster")
             {
-                if (File.Exists(Application.StartupPath + @"data\enemy\enemy_" + textBox2.Text.Split('/')[1] + ".dat"))
+                if (File.Exists(Application.StartupPath + @"..\data\enemy\enemy_" + textBox2.Text.Split('/')[1] + ".dat"))
                 {
-                    string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"data\enemy\enemy_" + textBox2.Text.Split('/')[1] + ".dat", Encoding.GetEncoding("GB2312"));
+                    string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"..\data\enemy\enemy_" + textBox2.Text.Split('/')[1] + ".dat", Encoding.GetEncoding("GB2312"));
                     string[] data = datatext.Split(Environment.NewLine.ToCharArray());
                     data = data.Where(s => !string.IsNullOrEmpty(s)).ToArray();
                     label6.Text = data[2].Split(':')[1];
@@ -279,9 +279,9 @@ namespace MapDesigner
             }
             else if (textBox2.Text.Split('/')[0] == "item")
             {
-                if (File.Exists(Application.StartupPath + @"data\item\item_" + textBox2.Text.Split('/')[1] + ".dat"))
+                if (File.Exists(Application.StartupPath + @"..\data\item\item_" + textBox2.Text.Split('/')[1] + ".dat"))
                 {
-                    string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"data\item\item_" + textBox2.Text.Split('/')[1] + ".dat", Encoding.GetEncoding("GB2312"));
+                    string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"..\data\item\item_" + textBox2.Text.Split('/')[1] + ".dat", Encoding.GetEncoding("GB2312"));
                     string[] data = datatext.Split(Environment.NewLine.ToCharArray());
                     data = data.Where(s => !string.IsNullOrEmpty(s)).ToArray();
                     label6.Text = data[3].Split(':')[1];
