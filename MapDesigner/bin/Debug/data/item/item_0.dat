@@ -1,5 +1,5 @@
 [item]
-name=黄钥匙
+name:黄钥匙
 description:可以打开黄色的门
 file:Item01-01.png
 pos:0,0

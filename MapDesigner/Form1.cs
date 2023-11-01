@@ -14,6 +14,7 @@ namespace MapDesigner
         bool redraw;
         List<List<ProjectEvent>> events;
         Pen mypen;
+        Bitmap buffer1;
         public Form1()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
@@ -44,7 +45,7 @@ namespace MapDesigner
             while (File.Exists(Application.StartupPath + @"..\data\map\map_" + idx.ToString() + ".dat"))
             {
                 file = "map_" + idx.ToString() + ".dat";
-                string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"..\data\map\map_" + idx.ToString() + ".dat", Encoding.GetEncoding("GB2312"));
+                string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"..\data\map\map_" + idx.ToString() + ".dat");
                 string[] datas = datatext.Split(',');
                 mapName.Add(datas[0]);
                 bgm.Add(datas[1]);
@@ -101,7 +102,11 @@ namespace MapDesigner
             if (redraw)
             {
                 if (label6.Text != "" && label6.Text != "无")
+                {
+                    if (pictureBox1.Image != null)
+                        pictureBox1.Image.Dispose();
                     pictureBox1.Image = Image.FromFile(Application.StartupPath + @"..\graphics\character\" + label6.Text);
+                }
                 else
                     g1.Clear(pictureBox1.BackColor);
                 redraw = false;
@@ -110,14 +115,22 @@ namespace MapDesigner
             g1.Dispose();
             if (label6.Text != "" && label6.Text != "无")
             {
-                Image img = Image.FromFile(Application.StartupPath + @"..\graphics\character\" + label6.Text);
-                Bitmap buffer1 = new Bitmap(32, 32);
+                if (pictureBox2.Image != null)
+                {
+                    pictureBox2.Image.Dispose();
+                    pictureBox2.Image = null;
+                }
+                if (buffer1 != null)
+                {
+                    buffer1.Dispose();
+                    buffer1 = null;
+                }
+                buffer1 = new Bitmap(32, 32);
                 Graphics g2 = Graphics.FromImage(buffer1);
-                g2.DrawImage(img, new Rectangle(0, 0, 32, 32), new Rectangle(32 * ((pos1 + gameTime * Convert.ToInt32(checkBox1.Checked)) % 4), pos2 * 32, 32, 32), GraphicsUnit.Pixel);
-                pictureBox2.BackgroundImage = buffer1;
+                g2.DrawImage(pictureBox1.Image, new Rectangle(0, 0, 32, 32), new Rectangle(32 * ((pos1 + gameTime * Convert.ToInt32(checkBox1.Checked)) % 4), pos2 * 32, 32, 32), GraphicsUnit.Pixel);
+                pictureBox2.Image = buffer1;
                 g2.Dispose();
             }
-
             Bitmap buffer2 = new Bitmap(352, 352);
             Graphics g3 = Graphics.FromImage(buffer2);
             g3.Clear(this.BackColor);
@@ -246,7 +259,7 @@ namespace MapDesigner
             Dictionary<string, (string, int, int)> corres = new Dictionary<string, (string, int, int)>();
             if (File.Exists(Application.StartupPath + @"..\DesignerReferrence.txt"))
             {
-                string extradatatext = System.IO.File.ReadAllText(Application.StartupPath + @"..\DesignerReferrence.txt", Encoding.GetEncoding("GB2312"));
+                string extradatatext = System.IO.File.ReadAllText(Application.StartupPath + @"..\DesignerReferrence.txt");
                 string[] extradata = extradatatext.Split(Environment.NewLine.ToCharArray());
                 extradata = extradata.Where(s => !string.IsNullOrEmpty(s)).ToArray();
                 foreach (string str in extradata)
@@ -260,7 +273,7 @@ namespace MapDesigner
             {
                 if (File.Exists(Application.StartupPath + @"..\data\enemy\enemy_" + textBox2.Text.Split('/')[1] + ".dat"))
                 {
-                    string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"..\data\enemy\enemy_" + textBox2.Text.Split('/')[1] + ".dat", Encoding.GetEncoding("GB2312"));
+                    string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"..\data\enemy\enemy_" + textBox2.Text.Split('/')[1] + ".dat");
                     string[] data = datatext.Split(Environment.NewLine.ToCharArray());
                     data = data.Where(s => !string.IsNullOrEmpty(s)).ToArray();
                     label6.Text = data[2].Split(':')[1];
@@ -281,7 +294,7 @@ namespace MapDesigner
             {
                 if (File.Exists(Application.StartupPath + @"..\data\item\item_" + textBox2.Text.Split('/')[1] + ".dat"))
                 {
-                    string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"..\data\item\item_" + textBox2.Text.Split('/')[1] + ".dat", Encoding.GetEncoding("GB2312"));
+                    string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"..\data\item\item_" + textBox2.Text.Split('/')[1] + ".dat");
                     string[] data = datatext.Split(Environment.NewLine.ToCharArray());
                     data = data.Where(s => !string.IsNullOrEmpty(s)).ToArray();
                     label6.Text = data[3].Split(':')[1];
@@ -381,7 +394,6 @@ namespace MapDesigner
                 MessageBox.Show("此处没有事件！");
             drawMapEvents();
         }
-
         private void button6_Click(object sender, EventArgs e)
         {
             if (copyEvID == -1)
