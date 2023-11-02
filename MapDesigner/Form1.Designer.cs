@@ -61,6 +61,8 @@
             textBox6 = new TextBox();
             label11 = new Label();
             timer1 = new System.Windows.Forms.Timer(components);
+            button8 = new Button();
+            button9 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             SuspendLayout();
@@ -71,7 +73,7 @@
             listBox1.ItemHeight = 17;
             listBox1.Location = new Point(10, 10);
             listBox1.Name = "listBox1";
-            listBox1.Size = new Size(120, 497);
+            listBox1.Size = new Size(120, 463);
             listBox1.TabIndex = 0;
             listBox1.SelectedIndexChanged += listBox1_SelectedIndexChanged;
             // 
@@ -358,10 +360,35 @@
             // 
             timer1.Tick += timer1_Tick;
             // 
+            // button8
+            // 
+            button8.Cursor = Cursors.Hand;
+            button8.Location = new Point(10, 480);
+            button8.Name = "button8";
+            button8.Size = new Size(120, 30);
+            button8.TabIndex = 30;
+            button8.Text = "新增地图";
+            button8.UseVisualStyleBackColor = true;
+            button8.Click += button8_Click;
+            // 
+            // button9
+            // 
+            button9.Cursor = Cursors.Hand;
+            button9.Location = new Point(352, 3);
+            button9.Name = "button9";
+            button9.Size = new Size(120, 30);
+            button9.TabIndex = 31;
+            button9.Text = "设为空白地图";
+            button9.UseVisualStyleBackColor = true;
+            button9.Click += button9_Click;
+            // 
             // Form1
             // 
-            AutoScaleMode = AutoScaleMode.None;
+            AutoScaleDimensions = new SizeF(96F, 96F);
+            AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(800, 541);
+            Controls.Add(button9);
+            Controls.Add(button8);
             Controls.Add(textBox6);
             Controls.Add(label11);
             Controls.Add(button7);
@@ -439,5 +466,7 @@
         private TextBox textBox6;
         private Label label11;
         private System.Windows.Forms.Timer timer1;
+        private Button button8;
+        private Button button9;
     }
 }

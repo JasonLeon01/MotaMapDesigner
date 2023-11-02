@@ -65,8 +65,9 @@ namespace MapDesigner
                 Application.Exit();
             }
         }
-        void saveMapData()
+        void saveMapData(string savefile = "")
         {
+            if (savefile == "") savefile = label2.Text;
             OpenFileDialog ofg = new OpenFileDialog();
             if (!Directory.Exists(Application.StartupPath + @"..\data\map"))
             {
@@ -92,7 +93,7 @@ namespace MapDesigner
                 savestr.Add(ev.through.ToString());
             }
             MessageBox.Show(string.Join(",", savestr));
-            System.IO.File.WriteAllText(Application.StartupPath + @"..\data\map\" + label2.Text, string.Join(",", savestr), Encoding.GetEncoding("GB2312"));
+            System.IO.File.WriteAllText(Application.StartupPath + @"..\data\map\" + savefile, string.Join(",", savestr));
         }
         private void drawMapEvents()
         {
@@ -152,7 +153,7 @@ namespace MapDesigner
             if (!checkBox3.Checked)
                 g3.DrawRectangle(mypen, screenX * 32 - 2, screenY * 32 - 2, 36, 36);
             Graphics g4 = this.CreateGraphics();
-            g4.DrawImage(buffer2, 352, 112);
+            g4.DrawImage(buffer2, textBox2.Left + textBox2.Width + 32, textBox2.Top + textBox2.Height);
             g4.Dispose();
             buffer2.Dispose();
             g3.Dispose();
@@ -243,9 +244,10 @@ namespace MapDesigner
         {
             MouseEventArgs me = (MouseEventArgs)e;
             Point thispoint = this.PointToClient(Control.MousePosition);
-            if (thispoint.X > 704 || thispoint.Y > 464 || thispoint.X < 352 || thispoint.Y < 112) return;
-            screenX = (thispoint.X - 352) / 32;
-            screenY = (thispoint.Y - 112) / 32;
+            (int x, int y) pos = (textBox2.Left + textBox2.Width + 32, textBox2.Top + textBox2.Height);
+            if (thispoint.X > pos.x + 352 || thispoint.Y > pos.y + 352 || thispoint.X < pos.x || thispoint.Y < pos.y) return;
+            screenX = (thispoint.X - pos.x) / 32;
+            screenY = (thispoint.Y - pos.y) / 32;
             label10.Text = "(" + screenX.ToString() + "," + screenY.ToString() + ")";
             label10.Refresh();
             if (me.Button == MouseButtons.Right)
@@ -453,6 +455,35 @@ namespace MapDesigner
                 copyEvID = -1;
                 label8.Text = "无";
                 label8.Refresh();
+            }
+        }
+        private void button8_Click(object sender, EventArgs e)
+        {
+            if (File.Exists(Application.StartupPath + @"..\data\map\blankmap.dat"))
+            {
+                string datatext = System.IO.File.ReadAllText(Application.StartupPath + @"..\data\map\blankmap.dat");
+                string[] datas = datatext.Split(',');
+                string tempMapName = datas[0];
+                string tempbgm = datas[1];
+                int cnt = int.Parse(datas[2]);
+                List<ProjectEvent> temp = new List<ProjectEvent>();
+                for (int i = 0; i < cnt; ++i)
+                    temp.Add(new ProjectEvent(datas[3 + 11 * i], datas[4 + 11 * i], int.Parse(datas[5 + 11 * i]), int.Parse(datas[6 + 11 * i]), int.Parse(datas[7 + 11 * i]), int.Parse(datas[8 + 11 * i]), int.Parse(datas[9 + 11 * i]), int.Parse(datas[10 + 11 * i]), int.Parse(datas[11 + 11 * i]), int.Parse(datas[12 + 11 * i]), int.Parse(datas[13 + 11 * i]))); mapName.Add(tempMapName);
+                bgm.Add(tempbgm);
+                listBox1.Items.Add(events.Count.ToString().PadLeft(3, '0') + "：" + mapName[events.Count]);
+                events.Add(temp);
+            }
+            else
+                MessageBox.Show("未找到可用空白地图模板！");
+        }
+        private void button9_Click(object sender, EventArgs e)
+        {
+            DialogResult AF = MessageBox.Show("是否要将当前地图设为空白地图模板？", "WARNING", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
+            if (AF == DialogResult.OK)
+            {
+                saveMapData("blankmap.dat");
+                refreshList();
+                MessageBox.Show("设置成功！");
             }
         }
     }
