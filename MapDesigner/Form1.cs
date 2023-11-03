@@ -140,14 +140,14 @@ namespace MapDesigner
                     buffer1.Dispose();
                     buffer1 = null;
                 }
-                buffer1 = new Bitmap(picsiz, picsiz);
+                buffer1 = new Bitmap(32, 32);
                 if (g2 != null)
                 {
                     g2.Dispose();
                     g2 = null;
                 }
                 g2 = Graphics.FromImage(buffer1);
-                g2.DrawImage(pictureBox1.Image, new Rectangle(0, 0, picsiz, picsiz), new Rectangle(picsiz * ((pos1 + gameTime * Convert.ToInt32(checkBox1.Checked)) % 4), pos2 * picsiz, picsiz, picsiz), GraphicsUnit.Pixel);
+                g2.DrawImage(pictureBox1.Image, new Rectangle(0, 0, 32, 32), new Rectangle(32 * ((pos1 + gameTime * Convert.ToInt32(checkBox1.Checked)) % 4), pos2 * 32, 32, 32), GraphicsUnit.Pixel);
                 pictureBox2.Image = buffer1;
             }
             if (buffer2 != null)
