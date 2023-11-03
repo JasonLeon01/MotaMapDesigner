@@ -155,6 +155,7 @@
             pictureBox1.Location = new Point(140, 147);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(128, 128);
+            pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 9;
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
@@ -165,6 +166,7 @@
             pictureBox2.Location = new Point(274, 147);
             pictureBox2.Name = "pictureBox2";
             pictureBox2.Size = new Size(32, 32);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox2.TabIndex = 10;
             pictureBox2.TabStop = false;
             // 
@@ -426,7 +428,8 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "可视化地图编辑器";
             Load += Form1_Load;
-            Click += Form1_Click;
+            MouseDown += Form1_MouseDown;
+            MouseUp += Form1_MouseUp;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             ResumeLayout(false);
