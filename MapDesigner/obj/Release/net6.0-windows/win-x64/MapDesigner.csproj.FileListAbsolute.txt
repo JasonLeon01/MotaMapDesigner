@@ -30,3 +30,4 @@ D:\GitHub Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x6
 D:\GitHub Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.pdb
 D:\GitHub Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.genruntimeconfig.cache
 D:\GitHub Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\ref\MapDesigner.dll
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Properties.Resources.resources

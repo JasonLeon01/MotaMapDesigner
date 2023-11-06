@@ -18,7 +18,7 @@ namespace MapDesigner
         Pen mypen;
         Bitmap buffer1, buffer2;
         MouseEventArgs me;
-        Graphics g1, g2, g3, g4;
+        Graphics g1, g2, g3;
         Image evimg;
         public Form1()
         {
@@ -48,6 +48,7 @@ namespace MapDesigner
         private void loadMapData()
         {
             int idx = 0;
+            bool flag = false;
             while (File.Exists("..\\data\\map\\map_" + idx.ToString() + ".dat"))
             {
                 file = "map_" + idx.ToString() + ".dat";
@@ -58,7 +59,15 @@ namespace MapDesigner
                 int cnt = int.Parse(datas[2]);
                 List<ProjectEvent> temp = new List<ProjectEvent>();
                 for (int i = 0; i < cnt; ++i)
-                    temp.Add(new ProjectEvent(datas[3 + 11 * i], datas[4 + 11 * i], int.Parse(datas[5 + 11 * i]), int.Parse(datas[6 + 11 * i]), int.Parse(datas[7 + 11 * i]), int.Parse(datas[8 + 11 * i]), int.Parse(datas[9 + 11 * i]), int.Parse(datas[10 + 11 * i]), int.Parse(datas[11 + 11 * i]), int.Parse(datas[12 + 11 * i]), int.Parse(datas[13 + 11 * i])));
+                {
+                    string gfile = datas[4 + 11 * i];
+                    if (!File.Exists("..\\graphics\\character\\" + gfile))
+                    {
+                        gfile = "无";
+                        flag = true;
+                    }
+                    temp.Add(new ProjectEvent(datas[3 + 11 * i], gfile, int.Parse(datas[5 + 11 * i]), int.Parse(datas[6 + 11 * i]), int.Parse(datas[7 + 11 * i]), int.Parse(datas[8 + 11 * i]), int.Parse(datas[9 + 11 * i]), int.Parse(datas[10 + 11 * i]), int.Parse(datas[11 + 11 * i]), int.Parse(datas[12 + 11 * i]), int.Parse(datas[13 + 11 * i])));
+                }
                 events.Add(temp);
                 listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "：" + mapName[idx]);
                 ++idx;
@@ -70,6 +79,8 @@ namespace MapDesigner
                 MessageBox.Show("文件夹中没有可用地图数据");
                 Application.Exit();
             }
+            if (flag)
+                MessageBox.Show("有部分事件的图片文件不存在，请检查！");
         }
         void saveMapData(string savefile = "")
         {
@@ -176,21 +187,23 @@ namespace MapDesigner
                     evimg.Dispose();
                     evimg = null;
                 }
-                evimg = Image.FromFile("..\\graphics\\character\\" + ev.file);
-                g3.DrawImage(evimg, new Rectangle(ev.x * 32, ev.y * 32, 32, 32), new Rectangle(32 * ((ev.pos1 + gameTime * ev.move) % 4), 32 * ev.pos2, 32, 32), GraphicsUnit.Pixel);
+                if (ev.file != "" && ev.file != "无")
+                {
+                    evimg = Image.FromFile("..\\graphics\\character\\" + ev.file);
+                    g3.DrawImage(evimg, new Rectangle(ev.x * 32, ev.y * 32, 32, 32), new Rectangle(32 * ((ev.pos1 + gameTime * ev.move) % 4), 32 * ev.pos2, 32, 32), GraphicsUnit.Pixel);
+                }
                 if (!checkBox3.Checked)
                     g3.DrawString(cnt.ToString(), new Font("Arial", 12), new SolidBrush(Color.White), new Point(ev.x * 32, ev.y * 32));
                 cnt++;
             }
             if (!checkBox3.Checked)
                 g3.DrawRectangle(mypen, screenX * 32 - 2, screenY * 32 - 2, 36, 36);
-            if (g4 != null)
+            if (pictureBox3.Image != null)
             {
-                g4.Dispose();
-                g4 = null;
+                pictureBox3.Image.Dispose();
+                pictureBox3.Image = null;
             }
-            g4 = this.CreateGraphics();
-            g4.DrawImage(buffer2, textBox2.Left + textBox2.Width + 32, textBox2.Top + textBox2.Height);
+            pictureBox3.Image = buffer2;
             GC.Collect();
         }
         private void refreshList()
@@ -279,11 +292,10 @@ namespace MapDesigner
         }
         private void MouseTrigger(object sender, EventArgs e)
         {
-            Point thispoint = this.PointToClient(Control.MousePosition);
-            (int x, int y) pos = (textBox2.Left + textBox2.Width + 32, textBox2.Top + textBox2.Height);
-            if (thispoint.X > pos.x + 352 || thispoint.Y > pos.y + 352 || thispoint.X < pos.x || thispoint.Y < pos.y) return;
-            screenX = (thispoint.X - pos.x) / 32;
-            screenY = (thispoint.Y - pos.y) / 32;
+            Point thispoint = pictureBox3.PointToClient(Control.MousePosition);
+            if (thispoint.X > pictureBox3.Width || thispoint.Y > pictureBox3.Height || thispoint.X < 0 || thispoint.Y < 0) return;
+            screenX = Math.Max(0, Math.Min(10, thispoint.X / (pictureBox3.Width / 11)));
+            screenY = Math.Max(0, Math.Min(10, thispoint.Y / (pictureBox3.Height / 11)));
             label10.Text = "(" + screenX.ToString() + "," + screenY.ToString() + ")";
             label10.Refresh();
             if (me.Button == MouseButtons.Right)
@@ -516,12 +528,12 @@ namespace MapDesigner
                 MessageBox.Show("设置成功！");
             }
         }
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
+        private void PictureBox3_MouseDown(object sender, MouseEventArgs e)
         {
             me = e;
             mouseDown = true;
         }
-        private void Form1_MouseUp(object sender, MouseEventArgs e)
+        private void PictureBox3_MouseUp(object sender, MouseEventArgs e)
         {
             mouseDown = false;
         }

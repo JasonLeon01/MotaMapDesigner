@@ -63,8 +63,10 @@
             timer1 = new System.Windows.Forms.Timer(components);
             button8 = new Button();
             button9 = new Button();
+            pictureBox3 = new PictureBox();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
             SuspendLayout();
             // 
             // listBox1
@@ -384,11 +386,23 @@
             button9.UseVisualStyleBackColor = true;
             button9.Click += button9_Click;
             // 
+            // pictureBox3
+            // 
+            pictureBox3.Location = new Point(352, 86);
+            pictureBox3.Name = "pictureBox3";
+            pictureBox3.Size = new Size(352, 352);
+            pictureBox3.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox3.TabIndex = 32;
+            pictureBox3.TabStop = false;
+            pictureBox3.MouseDown += PictureBox3_MouseDown;
+            pictureBox3.MouseUp += PictureBox3_MouseUp;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(800, 541);
+            Controls.Add(pictureBox3);
             Controls.Add(button9);
             Controls.Add(button8);
             Controls.Add(textBox6);
@@ -428,10 +442,9 @@
             StartPosition = FormStartPosition.CenterScreen;
             Text = "可视化地图编辑器";
             Load += Form1_Load;
-            MouseDown += Form1_MouseDown;
-            MouseUp += Form1_MouseUp;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pictureBox3).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -471,5 +484,6 @@
         private System.Windows.Forms.Timer timer1;
         private Button button8;
         private Button button9;
+        private PictureBox pictureBox3;
     }
 }
