@@ -4,6 +4,10 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Text.Encodings.Web;
+using System.Text.Json.Serialization;
+using System.Text.Json;
+using System.Text.Unicode;
 using System.Windows.Forms;
 
 namespace MapDesigner
@@ -12,9 +16,9 @@ namespace MapDesigner
     {
         int screenX, screenY, copyEvID, nowMapID, gameTime, pos1, pos2;
         string file;
-        List<string> mapName, bgm;
+        List<string> mapName, bgmFile;
         bool redraw, mouseDown;
-        List<List<ProjectEvent>> events;
+        List<List<ProjectEvent>> mapEvents;
         Pen mypen;
         Bitmap buffer1, buffer2;
         MouseEventArgs me;
@@ -33,10 +37,10 @@ namespace MapDesigner
             pos2 = 0;
             file = "";
             mapName = new List<string>();
-            bgm = new List<string>();
+            bgmFile = new List<string>();
             redraw = false;
             mouseDown = false;
-            events = new List<List<ProjectEvent>>();
+            mapEvents = new List<List<ProjectEvent>>();
             InitializeComponent();
             //采用双缓冲技术的控件必需的设置
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer | ControlStyles.ResizeRedraw | ControlStyles.AllPaintingInWmPaint, true);
@@ -49,30 +53,28 @@ namespace MapDesigner
         {
             int idx = 0;
             bool flag = false;
-            while (File.Exists("..\\data\\map\\map_" + idx.ToString() + ".dat"))
+            while (File.Exists("..\\data\\map\\map_" + idx.ToString() + ".json"))
             {
-                file = "map_" + idx.ToString() + ".dat";
-                string datatext = System.IO.File.ReadAllText("..\\data\\map\\map_" + idx.ToString() + ".dat");
-                string[] datas = datatext.Split(',');
-                mapName.Add(datas[0]);
-                bgm.Add(datas[1]);
-                int cnt = int.Parse(datas[2]);
-                List<ProjectEvent> temp = new List<ProjectEvent>();
-                for (int i = 0; i < cnt; ++i)
+                file = "map_" + idx.ToString() + ".json";
+                string jsonstr = System.IO.File.ReadAllText("..\\data\\map\\" + file);
+                Dictionary<string, object> mapdata = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonstr);
+                mapName.Add(mapdata["mapName"].ToString());
+                bgmFile.Add(mapdata["bgmFile"].ToString());
+                string evstr = mapdata["mapEvents"].ToString();
+                List<ProjectEvent> temp = JsonSerializer.Deserialize<List<ProjectEvent>>(evstr);
+                foreach (var ev in temp)
                 {
-                    string gfile = datas[4 + 11 * i];
-                    if (!File.Exists("..\\graphics\\character\\" + gfile))
+                    if (!File.Exists("..\\graphics\\character\\" + ev.file))
                     {
-                        gfile = "无";
+                        ev.file = "无";
                         flag = true;
                     }
-                    temp.Add(new ProjectEvent(datas[3 + 11 * i], gfile, int.Parse(datas[5 + 11 * i]), int.Parse(datas[6 + 11 * i]), int.Parse(datas[7 + 11 * i]), int.Parse(datas[8 + 11 * i]), int.Parse(datas[9 + 11 * i]), int.Parse(datas[10 + 11 * i]), int.Parse(datas[11 + 11 * i]), int.Parse(datas[12 + 11 * i]), int.Parse(datas[13 + 11 * i])));
                 }
-                events.Add(temp);
+                mapEvents.Add(temp);
                 listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "：" + mapName[idx]);
                 ++idx;
             }
-            nowMapID = events.Count - 1;
+            nowMapID = mapEvents.Count - 1;
             listBox1.SelectedIndex = nowMapID;
             if (nowMapID < 0)
             {
@@ -91,38 +93,26 @@ namespace MapDesigner
                 //创建路径
                 Directory.CreateDirectory("..\\data\\map");
             }
-            List<string> savestr = new List<string>();
-            savestr.Add(textBox1.Text);
-            savestr.Add(textBox6.Text);
-            savestr.Add(events[nowMapID].Count.ToString());
-            foreach (ProjectEvent ev in events[nowMapID])
+            var options = new JsonSerializerOptions
             {
-                savestr.Add(ev.name);
-                savestr.Add(ev.file);
-                savestr.Add(ev.pos1.ToString());
-                savestr.Add(ev.pos2.ToString());
-                savestr.Add(ev.x.ToString());
-                savestr.Add(ev.y.ToString());
-                savestr.Add(ev.type.ToString());
-                savestr.Add(ev.id.ToString());
-                savestr.Add(ev.value.ToString());
-                savestr.Add(ev.move.ToString());
-                savestr.Add(ev.through.ToString());
-            }
-            MessageBox.Show(string.Join(",", savestr));
-            System.IO.File.WriteAllText("..\\data\\map\\" + savefile, string.Join(",", savestr));
+                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+                DefaultIgnoreCondition = JsonIgnoreCondition.Never,
+                IncludeFields = true,
+                WriteIndented = true
+            };
+            Dictionary<string, object> savedata = new Dictionary<string, object>();
+            savedata.Add("mapName", mapName[listBox1.SelectedIndex]);
+            savedata.Add("bgmFile", bgmFile[listBox1.SelectedIndex]);
+            savedata.Add("mapEvents", mapEvents[listBox1.SelectedIndex]);
+            string jsonstr = JsonSerializer.Serialize(savedata, options);
+            System.IO.File.WriteAllText("..\\data\\map\\" + savefile, jsonstr);
+            MessageBox.Show(savefile + "保存成功");
         }
         private void drawMapEvents()
         {
             if (nowMapID < 0) return;
 
             int picsiz = pictureBox1.Width / 4;
-            if (g1 != null)
-            {
-                g1.Dispose();
-                g1 = null;
-            }
-            g1 = pictureBox1.CreateGraphics();
             if (redraw)
             {
                 if (label6.Text != "" && label6.Text != "无")
@@ -134,11 +124,8 @@ namespace MapDesigner
                     }
                     pictureBox1.Image = Image.FromFile("..\\graphics\\character\\" + label6.Text);
                 }
-                else
-                    g1.Clear(pictureBox1.BackColor);
                 redraw = false;
             }
-            g1.DrawRectangle(mypen, new Rectangle(pos1 * picsiz, pos2 * picsiz, picsiz, picsiz));
             if (label6.Text != "" && label6.Text != "无")
             {
                 if (pictureBox2.Image != null)
@@ -180,7 +167,7 @@ namespace MapDesigner
             Image floorimg = Image.FromFile("..\\graphics\\system\\floor.png");
             g3.DrawImage(floorimg, 0, 0, 352, 352);
             floorimg.Dispose();
-            foreach (ProjectEvent ev in events[nowMapID])
+            foreach (ProjectEvent ev in mapEvents[nowMapID])
             {
                 if (evimg != null)
                 {
@@ -190,7 +177,7 @@ namespace MapDesigner
                 if (ev.file != "" && ev.file != "无")
                 {
                     evimg = Image.FromFile("..\\graphics\\character\\" + ev.file);
-                    g3.DrawImage(evimg, new Rectangle(ev.x * 32, ev.y * 32, 32, 32), new Rectangle(32 * ((ev.pos1 + gameTime * ev.move) % 4), 32 * ev.pos2, 32, 32), GraphicsUnit.Pixel);
+                    g3.DrawImage(evimg, new Rectangle(ev.x * 32, ev.y * 32, 32, 32), new Rectangle(32 * ((ev.pos[0] + gameTime * Convert.ToInt32(ev.move)) % 4), 32 * ev.pos[1], 32, 32), GraphicsUnit.Pixel);
                 }
                 if (!checkBox3.Checked)
                     g3.DrawString(cnt.ToString(), new Font("Arial", 12), new SolidBrush(Color.White), new Point(ev.x * 32, ev.y * 32));
@@ -219,15 +206,15 @@ namespace MapDesigner
         }
         private bool haveAnEvent(int x, int y)
         {
-            if (events[nowMapID].Count == 0) return false;
-            foreach (ProjectEvent ev in events[nowMapID])
+            if (mapEvents[nowMapID].Count == 0) return false;
+            foreach (ProjectEvent ev in mapEvents[nowMapID])
                 if (ev.x == x && ev.y == y)
                     return true;
             return false;
         }
         private ProjectEvent getCertainEvent(int x, int y)
         {
-            foreach (ProjectEvent ev in events[nowMapID])
+            foreach (ProjectEvent ev in mapEvents[nowMapID])
                 if (ev.x == x && ev.y == y)
                     return ev;
             return new ProjectEvent();
@@ -238,7 +225,7 @@ namespace MapDesigner
             this.label2.Text = file;
             this.label2.Refresh();
             this.textBox1.Text = mapName[nowMapID];
-            this.textBox6.Text = bgm[nowMapID];
+            this.textBox6.Text = bgmFile[nowMapID];
             drawMapEvents();
         }
         private void timer1_Tick(object sender, EventArgs e)
@@ -253,7 +240,7 @@ namespace MapDesigner
         }
         private void textBox6_TextChanged(object sender, EventArgs e)
         {
-            bgm[nowMapID] = textBox6.Text;
+            bgmFile[nowMapID] = textBox6.Text;
         }
         private void pictureBox1_Click(object sender, EventArgs e)
         {
@@ -322,15 +309,14 @@ namespace MapDesigner
             }
             if (textBox2.Text.Split('/')[0] == "monster")
             {
-                if (File.Exists("..\\data\\enemy\\enemy_" + textBox2.Text.Split('/')[1] + ".dat"))
+                if (File.Exists("..\\data\\enemy\\enemy_" + textBox2.Text.Split('/')[1] + ".json"))
                 {
-                    string datatext = System.IO.File.ReadAllText("..\\data\\enemy\\enemy_" + textBox2.Text.Split('/')[1] + ".dat");
-                    string[] data = datatext.Split(Environment.NewLine.ToCharArray());
-                    data = data.Where(s => !string.IsNullOrEmpty(s)).ToArray();
-                    label6.Text = data[2].Split(':')[1];
+                    string jsonstr = System.IO.File.ReadAllText("..\\data\\enemy\\enemy_" + textBox2.Text.Split('/')[1] + ".json");
+                    Dictionary<string, object> enemydata = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonstr);
+                    label6.Text = enemydata["file"].ToString();
                     label6.Refresh();
                     pos1 = 0;
-                    pos2 = int.Parse(data[4].Split(':')[1]);
+                    pos2 = int.Parse(enemydata["pos"].ToString());
                     checkBox1.Checked = true;
                     checkBox2.Checked = false;
                     redraw = true;
@@ -343,15 +329,15 @@ namespace MapDesigner
             }
             else if (textBox2.Text.Split('/')[0] == "item")
             {
-                if (File.Exists("..\\data\\item\\item_" + textBox2.Text.Split('/')[1] + ".dat"))
+                if (File.Exists("..\\data\\item\\item_" + textBox2.Text.Split('/')[1] + ".json"))
                 {
-                    string datatext = System.IO.File.ReadAllText("..\\data\\item\\item_" + textBox2.Text.Split('/')[1] + ".dat");
-                    string[] data = datatext.Split(Environment.NewLine.ToCharArray());
-                    data = data.Where(s => !string.IsNullOrEmpty(s)).ToArray();
-                    label6.Text = data[3].Split(':')[1];
+                    string jsonstr = System.IO.File.ReadAllText("..\\data\\item\\item_" + textBox2.Text.Split('/')[1] + ".json");
+                    Dictionary<string, object> itemdata = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonstr);
+                    label6.Text = itemdata["file"].ToString();
                     label6.Refresh();
-                    pos1 = int.Parse(data[4].Split(':')[1].Split(',')[0]);
-                    pos2 = int.Parse(data[4].Split(':')[1].Split(',')[1]);
+                    int[] tmparr = JsonSerializer.Deserialize<int[]>(itemdata["pos"].ToString());
+                    pos1 = tmparr[0];
+                    pos2 = tmparr[1];
                     checkBox1.Checked = false;
                     checkBox2.Checked = false;
                     redraw = true;
@@ -393,8 +379,8 @@ namespace MapDesigner
             {
                 if (textBox2.Text == "" || label6.Text == "" || label6.Text == "无")
                     return;
-                events[nowMapID].Add(new ProjectEvent(textBox2.Text, label6.Text, pos1, pos2, screenX, screenY, int.Parse(textBox3.Text), int.Parse(textBox4.Text), int.Parse(textBox5.Text), Convert.ToInt32(checkBox1.Checked), Convert.ToInt32(checkBox2.Checked)));
-                copyEvID = events[nowMapID].Count - 1;
+                mapEvents[nowMapID].Add(new ProjectEvent(mapEvents[nowMapID].Count, textBox2.Text, label6.Text, new int[] { pos1, pos2 }, screenX, screenY, new int[] { int.Parse(textBox3.Text), int.Parse(textBox4.Text), int.Parse(textBox5.Text) }, checkBox1.Checked, checkBox2.Checked));
+                copyEvID = mapEvents[nowMapID].Count - 1;
                 label8.Text = copyEvID.ToString();
             }
             else
@@ -403,21 +389,21 @@ namespace MapDesigner
         }
         private void button4_Click(object sender, EventArgs e)
         {
-            if (events[nowMapID].Count == 0) return;
+            if (mapEvents[nowMapID].Count == 0) return;
             if (haveAnEvent(screenX, screenY))
             {
                 ProjectEvent temp = getCertainEvent(screenX, screenY);
                 textBox2.Text = temp.name;
                 label6.Text = temp.file;
                 label6.Refresh();
-                textBox3.Text = temp.type.ToString();
-                textBox4.Text = temp.id.ToString();
-                textBox5.Text = temp.value.ToString();
+                textBox3.Text = temp.triggerCondition[0].ToString();
+                textBox4.Text = temp.triggerCondition[1].ToString();
+                textBox5.Text = temp.triggerCondition[2].ToString();
                 checkBox1.Checked = Convert.ToBoolean(temp.move);
                 checkBox2.Checked = Convert.ToBoolean(temp.through);
-                pos1 = temp.pos1;
-                pos2 = temp.pos2;
-                copyEvID = events[nowMapID].IndexOf(temp);
+                pos1 = temp.pos[0];
+                pos2 = temp.pos[1];
+                copyEvID = mapEvents[nowMapID].IndexOf(temp);
                 label8.Text = copyEvID.ToString();
                 redraw = true;
             }
@@ -426,10 +412,10 @@ namespace MapDesigner
         {
             if (haveAnEvent(screenX, screenY))
             {
-                events[nowMapID].Remove(getCertainEvent(screenX, screenY));
-                if (copyEvID >= events[nowMapID].Count)
+                mapEvents[nowMapID].Remove(getCertainEvent(screenX, screenY));
+                if (copyEvID >= mapEvents[nowMapID].Count)
                 {
-                    copyEvID = events[nowMapID].Count - 1;
+                    copyEvID = mapEvents[nowMapID].Count - 1;
                     label8.Text = copyEvID.ToString();
                     label8.Refresh();
                 }
@@ -448,8 +434,8 @@ namespace MapDesigner
                 MessageBox.Show("此处已有事件！");
                 return;
             }
-            events[nowMapID][copyEvID].x = screenX;
-            events[nowMapID][copyEvID].y = screenY;
+            mapEvents[nowMapID][copyEvID].x = screenX;
+            mapEvents[nowMapID][copyEvID].y = screenY;
             drawMapEvents();
         }
         private void button5_Click(object sender, EventArgs e)
@@ -461,16 +447,16 @@ namespace MapDesigner
                 if (textBox2.Text == "" || label6.Text == "" || label6.Text == "无")
                     return;
                 ProjectEvent temp = getCertainEvent(screenX, screenY);
-                int tempid = events[nowMapID].IndexOf(temp);
-                events[nowMapID][tempid].name = textBox2.Text;
-                events[nowMapID][tempid].file = label6.Text;
-                events[nowMapID][tempid].type = int.Parse(textBox3.Text);
-                events[nowMapID][tempid].id = int.Parse(textBox4.Text);
-                events[nowMapID][tempid].value = int.Parse(textBox5.Text);
-                events[nowMapID][tempid].move = Convert.ToInt32(checkBox1.Checked);
-                events[nowMapID][tempid].through = Convert.ToInt32(checkBox2.Checked);
-                events[nowMapID][tempid].pos1 = pos1;
-                events[nowMapID][tempid].pos2 = pos2;
+                int tempid = mapEvents[nowMapID].IndexOf(temp);
+                mapEvents[nowMapID][tempid].name = textBox2.Text;
+                mapEvents[nowMapID][tempid].file = label6.Text;
+                mapEvents[nowMapID][tempid].triggerCondition[0] = int.Parse(textBox3.Text);
+                mapEvents[nowMapID][tempid].triggerCondition[1] = int.Parse(textBox4.Text);
+                mapEvents[nowMapID][tempid].triggerCondition[2] = int.Parse(textBox5.Text);
+                mapEvents[nowMapID][tempid].move = checkBox1.Checked;
+                mapEvents[nowMapID][tempid].through = checkBox2.Checked;
+                mapEvents[nowMapID][tempid].pos[0] = pos1;
+                mapEvents[nowMapID][tempid].pos[1] = pos2;
                 drawMapEvents();
             }
         }
@@ -486,14 +472,14 @@ namespace MapDesigner
                 nowMapID = listBox1.SelectedIndex;
                 if (nowMapID < 0)
                 {
-                    nowMapID = events.Count - 1;
+                    nowMapID = mapEvents.Count - 1;
                     listBox1.SelectedIndex = nowMapID;
                 }
-                file = "map_" + nowMapID.ToString() + ".dat";
+                file = "map_" + nowMapID.ToString() + ".json";
                 label2.Text = file;
                 label2.Refresh();
                 textBox1.Text = mapName[nowMapID];
-                textBox6.Text = bgm[nowMapID];
+                textBox6.Text = bgmFile[nowMapID];
                 copyEvID = -1;
                 label8.Text = "无";
                 label8.Refresh();
@@ -501,19 +487,21 @@ namespace MapDesigner
         }
         private void button8_Click(object sender, EventArgs e)
         {
-            if (File.Exists("..\\data\\map\\blankmap.dat"))
+            if (File.Exists("..\\data\\map\\blankmap.json"))
             {
-                string datatext = System.IO.File.ReadAllText("..\\data\\map\\blankmap.dat");
-                string[] datas = datatext.Split(',');
-                string tempMapName = datas[0];
-                string tempbgm = datas[1];
-                int cnt = int.Parse(datas[2]);
-                List<ProjectEvent> temp = new List<ProjectEvent>();
-                for (int i = 0; i < cnt; ++i)
-                    temp.Add(new ProjectEvent(datas[3 + 11 * i], datas[4 + 11 * i], int.Parse(datas[5 + 11 * i]), int.Parse(datas[6 + 11 * i]), int.Parse(datas[7 + 11 * i]), int.Parse(datas[8 + 11 * i]), int.Parse(datas[9 + 11 * i]), int.Parse(datas[10 + 11 * i]), int.Parse(datas[11 + 11 * i]), int.Parse(datas[12 + 11 * i]), int.Parse(datas[13 + 11 * i]))); mapName.Add(tempMapName);
-                bgm.Add(tempbgm);
-                listBox1.Items.Add(events.Count.ToString().PadLeft(3, '0') + "：" + mapName[events.Count]);
-                events.Add(temp);
+                string jsonstr = System.IO.File.ReadAllText("..\\data\\map\\blankmap.json");
+                Dictionary<string, object> mapdata = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonstr);
+                mapName.Add(mapdata["mapName"].ToString());
+                bgmFile.Add(mapdata["bgmFile"].ToString());
+                string evstr = mapdata["mapEvents"].ToString();
+                List<ProjectEvent> temp = JsonSerializer.Deserialize<List<ProjectEvent>>(evstr);
+                foreach (var ev in temp)
+                {
+                    if (!File.Exists("..\\graphics\\character\\" + ev.file))
+                        ev.file = "无";
+                }
+                listBox1.Items.Add(mapEvents.Count.ToString().PadLeft(3, '0') + "：" + mapName[mapEvents.Count]);
+                mapEvents.Add(temp);
             }
             else
                 MessageBox.Show("未找到可用空白地图模板！");
@@ -523,7 +511,7 @@ namespace MapDesigner
             DialogResult AF = MessageBox.Show("是否要将当前地图设为空白地图模板？", "WARNING", MessageBoxButtons.OKCancel, MessageBoxIcon.Question);
             if (AF == DialogResult.OK)
             {
-                saveMapData("blankmap.dat");
+                saveMapData("blankmap.json");
                 refreshList();
                 MessageBox.Show("设置成功！");
             }
@@ -537,38 +525,46 @@ namespace MapDesigner
         {
             mouseDown = false;
         }
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            int picsiz = pictureBox1.Width / 4;
+            e.Graphics.DrawRectangle(mypen, new Rectangle(pos1 * picsiz, pos2 * picsiz, picsiz, picsiz));
+        }
     }
 }
 
 class ProjectEvent
 {
-    public string name, file;
-    public int pos1, pos2, x, y, type, id, value, move, through;
+    public int ID { get; set; }
+    public string name { get; set; }
+    public string file { get; set; }
+    public int[] pos { get; set; }
+    public int x { get; set; }
+    public int y { get; set; }
+    public int[] triggerCondition { get; set; }
+    public bool move { get; set; }
+    public bool through { get; set; }
     public ProjectEvent()
     {
+        ID = 0;
         name = "";
         file = "";
-        pos1 = 0;
-        pos2 = 0;
+        pos = new int[] { 0, 0 };
         x = 0;
         y = 0;
-        type = 0;
-        id = 0;
-        value = 0;
-        move = 0;
-        through = 0;
+        triggerCondition = new int[] { 0, 0, 0 };
+        move = false;
+        through = false;
     }
-    public ProjectEvent(string name, string file, int pos1, int pos2, int x, int y, int type, int id, int value, int move, int through)
+    public ProjectEvent(int ID, string name, string file, int[] pos, int x, int y, int[] triggerCondition, bool move, bool through)
     {
+        this.ID = ID;
         this.name = name;
         this.file = file;
-        this.pos1 = pos1;
-        this.pos2 = pos2;
+        this.pos = pos;
         this.x = x;
         this.y = y;
-        this.type = type;
-        this.id = id;
-        this.value = value;
+        this.triggerCondition = triggerCondition;
         this.move = move;
         this.through = through;
     }

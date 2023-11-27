@@ -161,6 +161,7 @@
             pictureBox1.TabIndex = 9;
             pictureBox1.TabStop = false;
             pictureBox1.Click += pictureBox1_Click;
+            pictureBox1.Paint += pictureBox1_Paint;
             // 
             // pictureBox2
             // 
@@ -356,9 +357,9 @@
             label11.AutoSize = true;
             label11.Location = new Point(140, 63);
             label11.Name = "label11";
-            label11.Size = new Size(49, 17);
+            label11.Size = new Size(66, 17);
             label11.TabIndex = 28;
-            label11.Text = "BGM：";
+            label11.Text = "bgmFile：";
             // 
             // timer1
             // 
