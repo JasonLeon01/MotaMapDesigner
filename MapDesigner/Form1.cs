@@ -69,6 +69,7 @@ namespace MapDesigner
                         ev.file = "ÎÞ";
                         flag = true;
                     }
+                    ev.ID = temp.IndexOf(ev);
                 }
                 mapEvents.Add(temp);
                 listBox1.Items.Add(idx.ToString().PadLeft(3, '0') + "£º" + mapName[idx]);
@@ -529,6 +530,18 @@ namespace MapDesigner
         {
             int picsiz = pictureBox1.Width / 4;
             e.Graphics.DrawRectangle(mypen, new Rectangle(pos1 * picsiz, pos2 * picsiz, picsiz, picsiz));
+        }
+        private void button10_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            if (textBox2.Text != "" && textBox2.Text != "ÎÞ")
+                form2.dsl = textBox2.Text;
+            form2.ShowDialog();
+            if (form2.dsl != "")
+            {
+                textBox2.Text = form2.dsl;
+                textBox2.Refresh();
+            }
         }
     }
 }

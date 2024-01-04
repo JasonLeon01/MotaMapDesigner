@@ -64,6 +64,7 @@
             button8 = new Button();
             button9 = new Button();
             pictureBox3 = new PictureBox();
+            button10 = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pictureBox3).BeginInit();
@@ -110,7 +111,7 @@
             // 
             textBox1.Location = new Point(200, 32);
             textBox1.Name = "textBox1";
-            textBox1.Size = new Size(125, 23);
+            textBox1.Size = new Size(92, 23);
             textBox1.TabIndex = 4;
             textBox1.Text = "无";
             textBox1.TextChanged += textBox1_TextChanged;
@@ -128,7 +129,7 @@
             // 
             textBox2.Location = new Point(200, 89);
             textBox2.Name = "textBox2";
-            textBox2.Size = new Size(125, 23);
+            textBox2.Size = new Size(92, 23);
             textBox2.TabIndex = 6;
             textBox2.Text = "无";
             // 
@@ -347,7 +348,7 @@
             // 
             textBox6.Location = new Point(200, 60);
             textBox6.Name = "textBox6";
-            textBox6.Size = new Size(125, 23);
+            textBox6.Size = new Size(92, 23);
             textBox6.TabIndex = 29;
             textBox6.Text = "无";
             textBox6.TextChanged += textBox6_TextChanged;
@@ -398,11 +399,22 @@
             pictureBox3.MouseDown += PictureBox3_MouseDown;
             pictureBox3.MouseUp += PictureBox3_MouseUp;
             // 
+            // button10
+            // 
+            button10.Location = new Point(298, 92);
+            button10.Name = "button10";
+            button10.Size = new Size(26, 23);
+            button10.TabIndex = 33;
+            button10.Text = "...";
+            button10.UseVisualStyleBackColor = true;
+            button10.Click += button10_Click;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(800, 541);
+            Controls.Add(button10);
             Controls.Add(pictureBox3);
             Controls.Add(button9);
             Controls.Add(button8);
@@ -486,5 +498,6 @@
         private Button button8;
         private Button button9;
         private PictureBox pictureBox3;
+        private Button button10;
     }
 }

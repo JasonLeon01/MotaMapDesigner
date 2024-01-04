@@ -31,3 +31,8 @@ D:\GitHub Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesig
 D:\GitHub Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.genruntimeconfig.cache
 D:\GitHub Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\ref\MapDesigner.dll
 E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.Properties.Resources.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.Form2.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.Form3.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.Form4.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.Form5.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.Form6.resources
