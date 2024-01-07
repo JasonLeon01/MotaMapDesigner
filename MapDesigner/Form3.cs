@@ -46,6 +46,30 @@ namespace MapDesigner
                 case 2:
                     currentForm = new Form6(this);
                     break;
+                case 3:
+                    currentForm = new Form7(this);
+                    break;
+                case 4:
+                    currentForm = new Form8(this);
+                    break;
+                case 5:
+                    currentForm = new Form9(this);
+                    break;
+                case 6:
+                    currentForm = new Form10(this);
+                    break;
+                case 7:
+                    currentForm = new Form11(this);
+                    break;
+                case 8:
+                    currentForm = new Form12(this);
+                    break;
+                case 9:
+                    currentForm = new Form13(this);
+                    break;
+                case 10:
+                    currentForm = new Form14(this);
+                    break;
                 default:
                     flag = false;
                     break;

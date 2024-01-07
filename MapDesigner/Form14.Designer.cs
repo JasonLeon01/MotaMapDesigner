@@ -1,6 +1,6 @@
 ﻿namespace MapDesigner
 {
-    partial class Form4
+    partial class Form14
     {
         /// <summary>
         /// Required designer variable.
@@ -37,9 +37,9 @@
             label1.AutoSize = true;
             label1.Location = new Point(12, 15);
             label1.Name = "label1";
-            label1.Size = new Size(45, 17);
+            label1.Size = new Size(56, 17);
             label1.TabIndex = 0;
-            label1.Text = "怪物ID";
+            label1.Text = "图片编号";
             // 
             // textBox1
             // 
@@ -49,7 +49,7 @@
             textBox1.TabIndex = 1;
             textBox1.TextChanged += textBox1_TextChanged;
             // 
-            // Form4
+            // Form14
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
@@ -59,7 +59,7 @@
             FormBorderStyle = FormBorderStyle.None;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "Form4";
+            Name = "Form14";
             ShowIcon = false;
             ShowInTaskbar = false;
             Text = "Form4";
