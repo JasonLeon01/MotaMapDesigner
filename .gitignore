@@ -1,3 +1,4 @@
 .vs
-MotaMapDesigner
-MotaMapDesigner.zip
+MapDesigner/bin
+MapDesigner/obj
+MapDesigner/Properties
