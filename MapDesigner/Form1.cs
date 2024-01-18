@@ -9,6 +9,7 @@ using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.Text.Unicode;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace MapDesigner
 {
@@ -64,7 +65,7 @@ namespace MapDesigner
                 List<ProjectEvent> temp = JsonSerializer.Deserialize<List<ProjectEvent>>(evstr);
                 foreach (var ev in temp)
                 {
-                    if (!File.Exists("..\\graphics\\character\\" + ev.file))
+                    if (!File.Exists("..\\assets\\character\\" + ev.file))
                     {
                         ev.file = "无";
                         flag = true;
@@ -99,7 +100,7 @@ namespace MapDesigner
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
                 DefaultIgnoreCondition = JsonIgnoreCondition.Never,
                 IncludeFields = true,
-                WriteIndented = true
+                WriteIndented = false
             };
             Dictionary<string, object> savedata = new Dictionary<string, object>();
             savedata.Add("mapName", mapName[listBox1.SelectedIndex]);
@@ -123,7 +124,7 @@ namespace MapDesigner
                         pictureBox1.Image.Dispose();
                         pictureBox1.Image = null;
                     }
-                    pictureBox1.Image = Image.FromFile("..\\graphics\\character\\" + label6.Text);
+                    pictureBox1.Image = Image.FromFile("..\\assets\\character\\" + label6.Text);
                 }
                 redraw = false;
             }
@@ -165,7 +166,7 @@ namespace MapDesigner
             g3.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.HighQuality;
             g3.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             int cnt = 0;
-            Image floorimg = Image.FromFile("..\\graphics\\system\\floor.png");
+            Image floorimg = Image.FromFile("..\\assets\\system\\floor.png");
             g3.DrawImage(floorimg, 0, 0, 352, 352);
             floorimg.Dispose();
             foreach (ProjectEvent ev in mapEvents[nowMapID])
@@ -177,7 +178,7 @@ namespace MapDesigner
                 }
                 if (ev.file != "" && ev.file != "无")
                 {
-                    evimg = Image.FromFile("..\\graphics\\character\\" + ev.file);
+                    evimg = Image.FromFile("..\\assets\\character\\" + ev.file);
                     g3.DrawImage(evimg, new Rectangle(ev.x * 32, ev.y * 32, 32, 32), new Rectangle(32 * ((ev.pos[0] + gameTime * Convert.ToInt32(ev.move)) % 4), 32 * ev.pos[1], 32, 32), GraphicsUnit.Pixel);
                 }
                 if (!checkBox3.Checked)
@@ -259,7 +260,7 @@ namespace MapDesigner
                 //创建对象
                 OpenFileDialog ofg = new OpenFileDialog();
                 //设置默认打开路径
-                ofg.InitialDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Application.ExecutablePath)) + "\\graphics\\character";
+                ofg.InitialDirectory = Path.GetDirectoryName(Path.GetDirectoryName(Application.ExecutablePath)) + "\\assets\\character";
                 ofg.RestoreDirectory = true;
                 //设置打开标题、后缀
                 ofg.Title = "请选择导入png文件";
@@ -498,7 +499,7 @@ namespace MapDesigner
                 List<ProjectEvent> temp = JsonSerializer.Deserialize<List<ProjectEvent>>(evstr);
                 foreach (var ev in temp)
                 {
-                    if (!File.Exists("..\\graphics\\character\\" + ev.file))
+                    if (!File.Exists("..\\assets\\character\\" + ev.file))
                         ev.file = "无";
                 }
                 listBox1.Items.Add(mapEvents.Count.ToString().PadLeft(3, '0') + "：" + mapName[mapEvents.Count]);

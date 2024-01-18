@@ -22,17 +22,17 @@ namespace MapDesigner
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            fm.evOrder = "move/" + textBox1.Text + "/" + textBox2.Text + "/" + textBox3.Text;
+            fm.evOrder = string.Format("move({0},{1},{2})", textBox1.Text, textBox2.Text, textBox3.Text);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            fm.evOrder = "move/" + textBox1.Text + "/" + textBox2.Text + "/" + textBox3.Text;
+            fm.evOrder = string.Format("move({0},{1},{2})", textBox1.Text, textBox2.Text, textBox3.Text);
         }
 
         private void textBox3_TextChanged(object sender, EventArgs e)
         {
-            fm.evOrder = "move/" + textBox1.Text + "/" + textBox2.Text + "/" + textBox3.Text;
+            fm.evOrder = string.Format("move({0},{1},{2})", textBox1.Text, textBox2.Text, textBox3.Text);
         }
     }
 }

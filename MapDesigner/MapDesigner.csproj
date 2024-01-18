@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
+    <TargetFramework>net6.0-windows7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
@@ -14,39 +14,35 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Form10.cs">
+    <Compile Update="Form10.cs" />
+    <Compile Update="Form23.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Form15.cs">
+    <Compile Update="Form22.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Form14.cs">
+    <Compile Update="Form21.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Form13.cs">
+    <Compile Update="Form20.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Form12.cs">
+    <Compile Update="Form19.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Form11.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Form9.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Form8.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Form7.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Form6.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="Form5.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Update="Form18.cs" />
+    <Compile Update="Form17.cs" />
+    <Compile Update="Form16.cs" />
+    <Compile Update="Form15.cs" />
+    <Compile Update="Form14.cs" />
+    <Compile Update="Form13.cs" />
+    <Compile Update="Form12.cs" />
+    <Compile Update="Form11.cs" />
+    <Compile Update="Form9.cs" />
+    <Compile Update="Form8.cs" />
+    <Compile Update="Form7.cs" />
+    <Compile Update="Form6.cs" />
+    <Compile Update="Form5.cs" />
     <Compile Update="Properties\Resources.Designer.cs">
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>

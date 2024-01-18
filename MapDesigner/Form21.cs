@@ -11,18 +11,14 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace MapDesigner
 {
-    public partial class Form7 : Form
+    public partial class Form21 : Form
     {
         Form3 fm;
-        public Form7(Form3 fm)
+        public Form21(Form3 fm)
         {
             this.fm = fm;
-            this.fm.evOrder = "";
+            this.fm.evOrder = "back";
             InitializeComponent();
-        }
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            fm.evOrder = string.Format("lava({0})", textBox1.Text);
         }
     }
 }

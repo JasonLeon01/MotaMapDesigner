@@ -11,10 +11,10 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace MapDesigner
 {
-    public partial class Form13 : Form
+    public partial class Form17 : Form
     {
         Form3 fm;
-        public Form13(Form3 fm)
+        public Form17(Form3 fm)
         {
             this.fm = fm;
             this.fm.evOrder = "";
@@ -22,12 +22,7 @@ namespace MapDesigner
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            fm.evOrder = string.Format("picon({0},{1})", textBox1.Text, textBox2.Text);
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            fm.evOrder = string.Format("picon({0},{1})", textBox1.Text, textBox2.Text);
+            fm.evOrder = string.Format("bgmswitch({0})", textBox1.Text);
         }
     }
 }

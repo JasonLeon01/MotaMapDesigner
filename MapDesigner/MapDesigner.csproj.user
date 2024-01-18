@@ -1,10 +1,37 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <_LastSelectedProfileId>E:\Github Projects\MotaMapDesigner\MapDesigner\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
+    <_LastSelectedProfileId>D:\Github Projects\MotaMapDesigner\MapDesigner\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
   <ItemGroup>
     <Compile Update="Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form10.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form11.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form12.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form13.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form14.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form15.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form16.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form17.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form18.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Form2.cs">
@@ -14,6 +41,21 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Form4.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form5.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form6.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form7.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form8.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Form9.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>

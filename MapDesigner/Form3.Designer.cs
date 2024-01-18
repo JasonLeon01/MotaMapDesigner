@@ -37,7 +37,7 @@
             // 
             listBox1.FormattingEnabled = true;
             listBox1.ItemHeight = 17;
-            listBox1.Items.AddRange(new object[] { "怪物（战斗）", "资源（血瓶宝石）", "门", "路障", "商店", "上下楼", "传送", "NPC", "修改变量", "显示图片", "消除图片", "条件分歧", "转换事件名", "切换BGM", "动画", "消除当前事件", "返回标题", "结局" });
+            listBox1.Items.AddRange(new object[] { "怪物（战斗）", "资源（血瓶宝石）", "获得物品", "门", "路障", "商店", "上下楼", "传送", "NPC", "修改变量", "显示图片", "消除图片", "条件分歧", "转换事件名", "切换BGM", "播放动画", "播放视频", "消除当前事件", "返回标题", "结局" });
             listBox1.Location = new Point(13, 11);
             listBox1.Name = "listBox1";
             listBox1.Size = new Size(131, 259);

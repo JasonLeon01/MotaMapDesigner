@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -31,9 +32,13 @@ namespace MapDesigner
             textBox1.Text = dsl;
             if (dsl != "")
             {
-                dslarray = dsl.Split("<>").ToList();
-                foreach (string s in dslarray)
-                    listBox1.Items.Add(s);
+                string pattern = @"[^(;]+(?:\([^()]*\))?;";
+                MatchCollection matches = Regex.Matches(dsl, pattern);
+                foreach (Match match in matches)
+                {
+                    string command = match.Value.TrimEnd(';');
+                    listBox1.Items.Add(command);
+                }
             }
         }
         private void refreshList()
@@ -53,7 +58,11 @@ namespace MapDesigner
                 else
                     dslarray.Add(form3.evOrder);
                 textBox1.ReadOnly = false;
-                textBox1.Text = string.Join("<>", dslarray);
+                textBox1.Text = string.Join(";", dslarray);
+                if (textBox1.Text[^1] != ';')
+                {
+                    textBox1.Text += ";";
+                }
                 textBox1.ReadOnly = true;
                 refreshList();
             }
@@ -71,7 +80,11 @@ namespace MapDesigner
             {
                 dslarray[listBox1.SelectedIndex] = form3.evOrder;
                 textBox1.ReadOnly = false;
-                textBox1.Text = string.Join("<>", dslarray);
+                textBox1.Text = string.Join(";", dslarray);
+                if (textBox1.Text[^1] != ';')
+                {
+                    textBox1.Text += ";";
+                }
                 textBox1.ReadOnly = true;
                 refreshList();
             }

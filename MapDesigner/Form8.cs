@@ -24,11 +24,12 @@ namespace MapDesigner
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            fm.evOrder = "shop/" + shopid.ToString() + "/" + textBox1.Text + "/" + textBox2.Text;
+            fm.evOrder = string.Format("shop({0},{1},{2}", shopid.ToString(), textBox1.Text, textBox2.Text);
             if (textBox3.Text.Length > 0 && int.Parse(textBox3.Text) != 0)
             {
-                fm.evOrder += "/" + textBox3.Text;
+                fm.evOrder += "," + textBox3.Text;
             }
+            fm.evOrder += ")";
         }
 
         private void radioButton1_CheckedChanged(object sender, EventArgs e)

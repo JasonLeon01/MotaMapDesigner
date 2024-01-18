@@ -56,7 +56,7 @@ namespace MapDesigner
             {
                 containers = textBox4.Text;
             }
-            fm.evOrder = string.Format("condition~[{0}]~{1}~{2}~{3}~{4}", containers, comboBox2.SelectedItem, textBox1.Text, textBox2.Text, textBox3.Text);
+            fm.evOrder = string.Format("condition([{0}],{1},{2},{3},{4})", containers, comboBox2.SelectedItem, textBox1.Text, textBox2.Text, textBox3.Text);
 
         }
 

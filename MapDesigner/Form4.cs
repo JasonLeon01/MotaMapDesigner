@@ -22,7 +22,7 @@ namespace MapDesigner
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            fm.evOrder = "monster/" + textBox1.Text;
+            fm.evOrder = string.Format("monster({0})", textBox1.Text);
         }
     }
 }

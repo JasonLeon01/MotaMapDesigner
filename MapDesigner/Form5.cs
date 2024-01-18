@@ -56,7 +56,7 @@ namespace MapDesigner
             val = textBox1.Text;
             if (kind != -1)
             {
-                fm.evOrder = string.Format("bonus/{0}/{1}", kind, val);
+                fm.evOrder = string.Format("bonus({0},{1})", kind, val);
             }
         }
     }

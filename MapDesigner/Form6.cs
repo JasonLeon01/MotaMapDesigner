@@ -22,7 +22,7 @@ namespace MapDesigner
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            fm.evOrder = "door/" + textBox1.Text;
+            fm.evOrder = string.Format("door({0})", textBox1.Text);
         }
         private void radioButton1_CheckedChanged(object sender, EventArgs e)
         {
