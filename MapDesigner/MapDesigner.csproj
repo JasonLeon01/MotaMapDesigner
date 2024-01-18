@@ -17,6 +17,9 @@
     <Compile Update="Form10.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Form15.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Form14.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -44,3 +44,4 @@ E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesig
 E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.Form12.resources
 E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.Form13.resources
 E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.Form14.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Debug\net6.0-windows\MapDesigner.Form15.resources

@@ -31,3 +31,16 @@ D:\GitHub Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x6
 D:\GitHub Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.genruntimeconfig.cache
 D:\GitHub Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\ref\MapDesigner.dll
 E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Properties.Resources.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Form10.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Form11.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Form12.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Form13.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Form14.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Form2.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Form3.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Form4.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Form5.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Form6.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Form7.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Form8.resources
+E:\Github Projects\MotaMapDesigner\MapDesigner\obj\Release\net6.0-windows\win-x64\MapDesigner.Form9.resources

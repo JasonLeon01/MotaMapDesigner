@@ -70,6 +70,9 @@ namespace MapDesigner
                 case 10:
                     currentForm = new Form14(this);
                     break;
+                case 11:
+                    currentForm = new Form15(this);
+                    break;
                 default:
                     flag = false;
                     break;
