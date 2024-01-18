@@ -1,4 +1,4 @@
 .vs
-MapDesigner/bin
-MapDesigner/obj
-MapDesigner/Properties
+MapDesigner/bin/
+MapDesigner/obj/
+MapDesigner/Properties/
