@@ -22,12 +22,17 @@ namespace MapDesigner
         }
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-            fm.evOrder = string.Format("var({0},{1})", textBox1.Text, textBox2.Text);
+            fm.evOrder = string.Format("var({0},{1},{2})", textBox1.Text, comboBox1.SelectedItem.ToString(), textBox2.Text);
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
         {
-            fm.evOrder = string.Format("var({0},{1})", textBox1.Text, textBox2.Text);
+            fm.evOrder = string.Format("var({0},{1},{2})", textBox1.Text, comboBox1.SelectedItem.ToString(), textBox2.Text);
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            fm.evOrder = string.Format("var({0},{1},{2})", textBox1.Text, comboBox1.SelectedItem.ToString(), textBox2.Text);
         }
     }
 }

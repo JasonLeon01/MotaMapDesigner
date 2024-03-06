@@ -32,7 +32,7 @@ namespace MapDesigner
             textBox1.Text = dsl;
             if (dsl != "")
             {
-                string pattern = @"[^(;]+(?:\([^()]*\))?;";
+                string pattern = @"([^;(]+)(?:\((?>[^()]+|\((?<DEPTH>)|\)(?<-DEPTH>))*(?(DEPTH)(?!))\))?;";
                 MatchCollection matches = Regex.Matches(dsl, pattern);
                 foreach (Match match in matches)
                 {

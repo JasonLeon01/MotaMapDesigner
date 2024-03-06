@@ -10,6 +10,7 @@ using System.Text.Json;
 using System.Text.Unicode;
 using System.Windows.Forms;
 using System.Xml;
+using System.Text.RegularExpressions;
 
 namespace MapDesigner
 {
@@ -309,11 +310,12 @@ namespace MapDesigner
                     corres.Add(s1, (s3[0], int.Parse(s3[1]), int.Parse(s3[2])));
                 }
             }
-            if (textBox2.Text.Split('/')[0] == "monster")
+            Match match = Regex.Match(textBox2.Text, @"monster\((\d+)\);");
+            if (match.Success)
             {
-                if (File.Exists("..\\data\\enemy\\enemy_" + textBox2.Text.Split('/')[1] + ".json"))
+                if (File.Exists("..\\data\\enemy\\enemy_" + match.Groups[1].Value + ".json"))
                 {
-                    string jsonstr = System.IO.File.ReadAllText("..\\data\\enemy\\enemy_" + textBox2.Text.Split('/')[1] + ".json");
+                    string jsonstr = System.IO.File.ReadAllText("..\\data\\enemy\\enemy_" + match.Groups[1].Value + ".json");
                     Dictionary<string, object> enemydata = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonstr);
                     label6.Text = enemydata["file"].ToString();
                     label6.Refresh();
@@ -329,49 +331,53 @@ namespace MapDesigner
                     return;
                 }
             }
-            else if (textBox2.Text.Split('/')[0] == "item")
-            {
-                if (File.Exists("..\\data\\item\\item_" + textBox2.Text.Split('/')[1] + ".json"))
-                {
-                    string jsonstr = System.IO.File.ReadAllText("..\\data\\item\\item_" + textBox2.Text.Split('/')[1] + ".json");
-                    Dictionary<string, object> itemdata = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonstr);
-                    label6.Text = itemdata["file"].ToString();
-                    label6.Refresh();
-                    int[] tmparr = JsonSerializer.Deserialize<int[]>(itemdata["pos"].ToString());
-                    pos1 = tmparr[0];
-                    pos2 = tmparr[1];
-                    checkBox1.Checked = false;
-                    checkBox2.Checked = false;
-                    redraw = true;
-                }
-                else
-                {
-                    MessageBox.Show("没有这号道具");
-                    return;
-                }
-            }
             else
             {
-                if (corres.Count > 0)
+                match = Regex.Match(textBox2.Text, @"item\((\d+),(\d+)\);");
+                if (match.Success)
                 {
-                    if (corres.ContainsKey(textBox2.Text))
+                    if (File.Exists("..\\data\\item\\item_" + match.Groups[1].Value + ".json"))
                     {
-                        (label6.Text, pos1, pos2) = corres[textBox2.Text];
+                        string jsonstr = System.IO.File.ReadAllText("..\\data\\item\\item_" + match.Groups[1].Value + ".json");
+                        Dictionary<string, object> itemdata = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonstr);
+                        label6.Text = itemdata["file"].ToString();
                         label6.Refresh();
+                        int[] tmparr = JsonSerializer.Deserialize<int[]>(itemdata["pos"].ToString());
+                        pos1 = tmparr[0];
+                        pos2 = tmparr[1];
                         checkBox1.Checked = false;
                         checkBox2.Checked = false;
                         redraw = true;
                     }
                     else
                     {
-                        MessageBox.Show("未找到支持的类型");
+                        MessageBox.Show("没有这号道具");
                         return;
                     }
                 }
                 else
                 {
-                    MessageBox.Show("未找到支持的类型");
-                    return;
+                    if (corres.Count > 0)
+                    {
+                        if (corres.ContainsKey(textBox2.Text))
+                        {
+                            (label6.Text, pos1, pos2) = corres[textBox2.Text];
+                            label6.Refresh();
+                            checkBox1.Checked = false;
+                            checkBox2.Checked = false;
+                            redraw = true;
+                        }
+                        else
+                        {
+                            MessageBox.Show("未找到支持的类型");
+                            return;
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("未找到支持的类型");
+                        return;
+                    }
                 }
             }
         }

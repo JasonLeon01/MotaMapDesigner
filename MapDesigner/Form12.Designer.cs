@@ -32,6 +32,8 @@
             textBox1 = new TextBox();
             textBox2 = new TextBox();
             label2 = new Label();
+            comboBox1 = new ComboBox();
+            label3 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -53,7 +55,7 @@
             // 
             // textBox2
             // 
-            textBox2.Location = new Point(74, 49);
+            textBox2.Location = new Point(74, 81);
             textBox2.Name = "textBox2";
             textBox2.Size = new Size(154, 23);
             textBox2.TabIndex = 3;
@@ -62,17 +64,39 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(12, 52);
+            label2.Location = new Point(12, 84);
             label2.Name = "label2";
-            label2.Size = new Size(32, 17);
+            label2.Size = new Size(44, 17);
             label2.TabIndex = 2;
-            label2.Text = "增量";
+            label2.Text = "修改量";
+            // 
+            // comboBox1
+            // 
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBox1.FormattingEnabled = true;
+            comboBox1.Items.AddRange(new object[] { "=", "+", "-", "*", "/", "%" });
+            comboBox1.Location = new Point(74, 50);
+            comboBox1.Name = "comboBox1";
+            comboBox1.Size = new Size(154, 25);
+            comboBox1.TabIndex = 4;
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(12, 50);
+            label3.Name = "label3";
+            label3.Size = new Size(44, 17);
+            label3.TabIndex = 5;
+            label3.Text = "操作符";
             // 
             // Form12
             // 
             AutoScaleDimensions = new SizeF(96F, 96F);
             AutoScaleMode = AutoScaleMode.Dpi;
             ClientSize = new Size(240, 217);
+            Controls.Add(label3);
+            Controls.Add(comboBox1);
             Controls.Add(textBox2);
             Controls.Add(label2);
             Controls.Add(textBox1);
@@ -94,5 +118,7 @@
         private TextBox textBox1;
         private TextBox textBox2;
         private Label label2;
+        private ComboBox comboBox1;
+        private Label label3;
     }
 }
